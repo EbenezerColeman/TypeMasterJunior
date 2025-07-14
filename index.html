@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TypeMaster Junior</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>TypeMaster Junior</h1>
+        <p>Type the word shown below:</p>
+
+        <div id="word-display">Click Start to begin</div>
+
+        <input type="text" id="word-input" placeholder="Type here..." autocomplete="off" disabled>
+
+        <div class="info">
+            <p>Time left: <span id="time">60</span> seconds</p>
+            <p>Score: <span id="score">0</span></p>
+            <p>Accuracy: <span id="accuracy">0%</span></p>
+        </div>
+
+        <button onclick="startGame()">Start Game</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
