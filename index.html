@@ -1,27 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>TypeMaster Junior</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TypeMaster Junior</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>TypeMaster Junior</h1>
-        <p>Type the word shown below:</p>
 
-        <div id="word-display">Click Start to begin</div>
+  <h1>TypeMaster Junior</h1>
 
-        <input type="text" id="word-input" placeholder="Type here..." autocomplete="off" disabled>
+  <!-- Word display area -->
+  <div id="word-display"></div>
 
-        <div class="info">
-            <p>Time left: <span id="time">60</span> seconds</p>
-            <p>Score: <span id="score">0</span></p>
-            <p>Accuracy: <span id="accuracy">0%</span></p>
-        </div>
+  <!-- Typing input field -->
+  <input type="text" id="word-input" placeholder="Start typing..." autocomplete="off" disabled>
 
-        <button onclick="startGame()">Start Game</button>
-    </div>
+  <!-- Game stats -->
+  <div class="stats">
+    <p>Time: <span id="time">60</span> sec</p>
+    <p>Score: <span id="score">0</span></p>
+    <p>Accuracy: <span id="accuracy">0%</span></p>
+  </div>
 
-    <script src="script.js"></script>
+  <!-- Start button -->
+  <button onclick="startGame()" style="margin-top: 20px; padding: 10px 20px; font-size: 16px; border: none; background-color: #007bff; color: white; border-radius: 8px; cursor: pointer;">
+    Start Game
+  </button>
+
+  <!-- Instructions -->
+  <p class="instructions">
+    Type the word shown above as quickly and accurately as you can.<br>
+    Your score and accuracy will update in real time.
+  </p>
+
+  <script src="script.js"></script>
 </body>
 </html>
