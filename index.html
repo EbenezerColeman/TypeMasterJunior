@@ -7,60 +7,79 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Start Screen -->
-  <div id="start-screen">
-    <div class="start-box">
-      <h1>Welcome to TypeMaster Junior</h1>
-      <p>A fun way for JHS students to practice typing!</p>
 
-      <!-- Difficulty Level Selector -->
-      <label for="level">Select Difficulty:</label>
-      <select id="level">
-        <option value="easy">Easy</option>
-        <option value="medium" selected>Medium</option>
-        <option value="hard">Hard</option>
-      </select>
+  <!-- Welcome Box -->
+  <div id="welcomeBox" class="welcome-box">
+    <h2>Welcome to TypeMaster Junior</h2>
+    <p>This fun typing game helps JHS students improve their typing speed and accuracy.</p>
+    <p>Choose a difficulty level, adjust font size if needed, and click "How to Play" to see instructions before you begin!</p>
+  </div>
 
-      <button onclick="initGame()">Start Game</button>
-      <p class="version">v1.0 – Educational Typing Game for JHS</p>
-    </div>
+  <!-- Top Controls -->
+  <div class="top-controls">
+    <select id="difficulty">
+      <option value="easy">Easy</option>
+      <option value="medium" selected>Medium</option>
+      <option value="hard">Hard</option>
+    </select>
+
+    <select id="fontSizeSelect" onchange="adjustFontSize()">
+      <option value="16px">A</option>
+      <option value="20px">A+</option>
+      <option value="24px">A++</option>
+    </select>
+
+    <button id="howToPlayBtn">How to Play</button>
+    <button onclick="startGame()">Start Game</button>
   </div>
 
   <!-- Game Container -->
-  <div class="container">
-    <h1>TypeMaster Junior</h1>
-    <div id="game-area">
-      <div id="word-display">Click Start to Begin</div>
-      <input type="text" id="word-input" placeholder="Type the word here..." disabled />
-      <div class="info-panel">
-        <p>⏱️ Time: <span id="time">60</span> seconds</p>
-        <p>✅ Score: <span id="score">0</span></p>
-        <p>🎯 Accuracy: <span id="accuracy">0%</span></p>
-      </div>
+  <div class="container" id="gameContainer" style="display: none;">
+    <h1 id="word-display">Press "Start Game" to begin</h1>
+    <input type="text" id="word-input" placeholder="Type here..." disabled />
+    <div class="info">
+      <p>Time: <span id="time">60</span>s</p>
+      <p>Score: <span id="score">0</span></p>
+      <p>Accuracy: <span id="accuracy">0%</span></p>
     </div>
+    <button id="restartBtn" onclick="restartGame()">Restart Game</button>
   </div>
 
   <!-- About Section -->
-  <section class="about-section">
+  <div class="about-box">
     <h2>About TypeMaster Junior</h2>
-    <p>
-      <strong>TypeMaster Junior</strong> is an educational typing game designed for Junior High School students to improve their typing speed and accuracy. 
-      The app uses real-time feedback, scoring, sound effects, and visual cues to make learning interactive and fun.
-    </p>
-    <p>
-      Developed by <strong>Ebenezer Badu Coleman</strong> as part of a multimedia project for teacher education.
-    </p>
-    <p>
-      View it live: 
-      <a href="https://ebenezercoleman.github.io/TypeMasterJunior/" target="_blank">
-        TypeMasterJunior GitHub Page
-      </a>
-    </p>
-  </section>
+    <p>This is an educational typing app designed to help JHS students improve their typing speed and accuracy.</p>
+    <p>Developed as part of an end-of-semester project for the course <strong>Multimedia in Teacher Education</strong>.</p>
+    <p>View live: <a href="https://ebenezercoleman.github.io/TypeMasterJunior/" target="_blank">https://ebenezercoleman.github.io/TypeMasterJunior/</a></p>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="howToModal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>How to Play</h2>
+      <ul>
+        <li>Choose a difficulty level</li>
+        <li>Select a font size if needed</li>
+        <li>Click "Start Game" to begin</li>
+        <li>Type the words as fast and accurately as you can</li>
+        <li>Your score and accuracy will be updated automatically</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confettiCanvas"></canvas>
 
   <script src="script.js"></script>
 </body>
 </html>
+
+
+
+
+
+
 
 
 
