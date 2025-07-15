@@ -1,39 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TypeMaster Junior</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-  <h1>TypeMaster Junior</h1>
-
-  <!-- Word display area -->
-  <div id="word-display"></div>
-
-  <!-- Typing input field -->
-  <input type="text" id="word-input" placeholder="Start typing..." autocomplete="off" disabled>
-
-  <!-- Game stats -->
-  <div class="stats">
-    <p>Time: <span id="time">60</span> sec</p>
-    <p>Score: <span id="score">0</span></p>
-    <p>Accuracy: <span id="accuracy">0%</span></p>
+  <div class="container">
+    <h1>TypeMaster Junior</h1>
+    <div id="game-area">
+      <div id="word-display">Click Start to Begin</div>
+      <input type="text" id="word-input" placeholder="Type the word here..." disabled />
+      <div class="info-panel">
+        <p>⏱️ Time: <span id="time">60</span> seconds</p>
+        <p>✅ Score: <span id="score">0</span></p>
+        <p>🎯 Accuracy: <span id="accuracy">0%</span></p>
+      </div>
+      <button onclick="startGame()">Start Game</button>
+    </div>
   </div>
 
-  <!-- Start button -->
-  <button onclick="startGame()" style="margin-top: 20px; padding: 10px 20px; font-size: 16px; border: none; background-color: #007bff; color: white; border-radius: 8px; cursor: pointer;">
-    Start Game
-  </button>
-
-  <!-- Instructions -->
-  <p class="instructions">
-    Type the word shown above as quickly and accurately as you can.<br>
-    Your score and accuracy will update in real time.
-  </p>
+  <section class="about-section">
+    <h2>About TypeMaster Junior</h2>
+    <p>
+      <strong>TypeMaster Junior</strong> is an educational typing game designed for Junior High School students to improve their typing speed and accuracy. 
+      The app uses real-time feedback, scoring, sound effects, and visual cues to make learning interactive and fun.
+    </p>
+    <p>
+      Developed by <strong>Ebenezer Badu Coleman</strong> as part of a multimedia project for teacher education.
+    </p>
+    <p>
+      View it live: 
+      <a href="https://ebenezercoleman.github.io/TypeMasterJunior/" target="_blank">
+        TypeMasterJunior GitHub Page
+      </a>
+    </p>
+  </section>
 
   <script src="script.js"></script>
 </body>
 </html>
+
