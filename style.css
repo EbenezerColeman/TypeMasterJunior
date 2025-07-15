@@ -1,113 +1,93 @@
-/* Body layout and theme */
-body {
+/* Reset styles */
+* {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: url('background.jpg') no-repeat center center fixed;
   background-size: cover;
-  color: #333;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
   min-height: 100vh;
-  padding-top: 40px;
+  padding: 20px;
+  color: #fff;
 }
 
-/* Page title */
+.container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.75);
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
+  text-align: center;
+}
+
 h1 {
-  font-size: 36px;
-  color: #004d99;
   margin-bottom: 20px;
-  text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.9);
+  font-size: 2.5rem;
+  color: #f8d210;
 }
 
-/* Displayed word */
 #word-display {
-  font-size: 48px;
-  font-weight: bold;
-  color: #222;
-  background-color: rgba(255, 255, 255, 0.9);
-  padding: 20px 40px;
-  border-radius: 20px;
-  margin-bottom: 30px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  text-align: center;
-  min-width: 200px;
+  font-size: 2rem;
+  margin: 20px 0;
+  color: #00ffcc;
 }
 
-/* Typing input box */
 #word-input {
-  padding: 12px 20px;
-  font-size: 22px;
-  border: 2px solid #007bff;
-  border-radius: 10px;
-  outline: none;
-  width: 60%;
-  max-width: 500px;
-  text-align: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-/* Game stats container */
-.stats {
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 15px;
-  padding: 20px 30px;
-  margin-top: 30px;
-  width: 300px;
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-}
-
-.stats p {
-  font-size: 18px;
-  margin: 10px 0;
-}
-
-/* Instructions */
-.instructions {
-  font-size: 14px;
-  color: #333;
-  margin-top: 25px;
-  text-align: center;
-  max-width: 500px;
-  padding: 0 15px;
-  background-color: rgba(255, 255, 255, 0.85);
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-/* Optional button styling */
-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 10px;
+  width: 80%;
+  font-size: 1.2rem;
   border: none;
-  background-color: #007bff;
-  color: white;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #00b894;
+  color: #fff;
+  border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background 0.3s ease;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #019875;
 }
 
-/* Responsive layout */
-@media (max-width: 600px) {
-  #word-input {
-    width: 90%;
-  }
-
-  .stats {
-    width: 90%;
-  }
-
-  #word-display {
-    font-size: 36px;
-    padding: 15px 20px;
-  }
+.info-panel {
+  margin: 15px 0;
+  font-size: 1.1rem;
 }
+
+.about-section {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  text-align: center;
+  color: #333;
+}
+
+.about-section h2 {
+  margin-bottom: 10px;
+  color: #005b96;
+}
+
+.about-section a {
+  color: #007acc;
+  text-decoration: none;
+}
+
+.about-section a:hover {
+  text-decoration: underline;
+}
+
 
