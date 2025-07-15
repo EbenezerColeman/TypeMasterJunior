@@ -9,14 +9,20 @@ let totalTyped = 0;
 let correctTyped = 0;
 let timeLeft = 60;
 let timer;
+
 const wordDisplay = document.getElementById("word-display");
 const wordInput = document.getElementById("word-input");
 const timeDisplay = document.getElementById("time");
 const scoreDisplay = document.getElementById("score");
 const accuracyDisplay = document.getElementById("accuracy");
-const correctSound = new Audio('sounds/correct.mp3');
-const wrongSound = new Audio('sounds/wrong.mp3');
+const correctSound = new Audio('correct.mp3');
+const wrongSound = new Audio('wrong.mp3');
 
+function initGame() {
+    document.getElementById("start-screen").style.display = "none";
+    document.querySelector(".container").style.display = "block";
+    startGame();
+}
 
 function startGame() {
     score = 0;
@@ -46,27 +52,23 @@ function generateWord() {
 }
 
 function checkInput() {
-  const typedWord = wordInput.value.trim();
+    const typedWord = wordInput.value.trim();
 
-  if (typedWord === currentWord) {
-    score++;
-    correctTyped++;
-    correctSound.play();     // ✅ play correct sound
-    scoreDisplay.textContent = score;
-    wordInput.value = "";
-    generateWord();          // load new word
-  } else if (
-    typedWord.length === currentWord.length &&
-    typedWord !== currentWord
-  ) {
-    wrongSound.play();       // ❌ play wrong sound if full word is incorrect
-  }
+    if (typedWord === currentWord) {
+        score++;
+        correctTyped++;
+        scoreDisplay.textContent = score;
+        correctSound.play();
+        generateWord();
+    } else {
+        if (typedWord.length >= currentWord.length) {
+            wrongSound.play();
+        }
+    }
 
-  totalTyped++;
-  updateAccuracy();
+    totalTyped++;
+    updateAccuracy();
 }
-
-
 
 function updateAccuracy() {
     const accuracy = totalTyped > 0 ? (correctTyped / totalTyped) * 100 : 0;
