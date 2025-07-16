@@ -1,6 +1,64 @@
-const easyWords = ["cat", "dog", "sun", "pen", "book", "map", "run"];
-const mediumWords = ["typing", "school", "junior", "lesson", "practice", "student", "computer"];
-const hardWords = ["accuracy", "keyboard", "education", "technology", "improvement", "evaluation"];
+// DOM Elements
+const wordDisplay = document.getElementById("word-display");
+const wordInput = document.getElementById("word-input");
+const timeDisplay = document.getElementById("time");
+const scoreDisplay = document.getElementById("score");
+const accuracyDisplay = document.getElementById("accuracy");
+const gameContainer = document.getElementById("gameContainer");
+const difficultySelect = document.getElementById("difficulty");
+const emojiFeedback = document.getElementById("emojiFeedback");
+const finalScoreText = document.getElementById("finalScoreText");
+const countdownOverlay = document.getElementById("countdownOverlay");
+const countdownText = document.getElementById("countdownText");
+const welcomeBox = document.getElementById("welcomeBox");
+const endMessageModal = document.getElementById("endMessageModal");
+
+const correctSound = new Audio("sounds/correct.mp3");
+const wrongSound = new Audio("sounds/wrong.mp3");
+
+// Confetti Setup
+const confettiCanvas = document.getElementById("confettiCanvas");
+const ctx = confettiCanvas.getContext("2d");
+confettiCanvas.width = window.innerWidth;
+confettiCanvas.height = window.innerHeight;
+
+const confettiParticles = [];
+
+function createConfettiBurst(x, y) {
+  for (let i = 0; i < 30; i++) {
+    confettiParticles.push({
+      x: x,
+      y: y,
+      size: Math.random() * 6 + 4,
+      color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+      velocityX: (Math.random() - 0.5) * 8,
+      velocityY: Math.random() * -10,
+      gravity: 0.5
+    });
+  }
+}
+
+function updateConfetti() {
+  ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+  for (let i = 0; i < confettiParticles.length; i++) {
+    const p = confettiParticles[i];
+    p.x += p.velocityX;
+    p.y += p.velocityY;
+    p.velocityY += p.gravity;
+
+    ctx.fillStyle = p.color;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  requestAnimationFrame(updateConfetti);
+}
+updateConfetti();
+
+// Word Lists
+const easyWords = ["cat", "dog", "sun", "red", "book"];
+const mediumWords = ["keyboard", "student", "typing", "school", "lesson"];
+const hardWords = ["accuracy", "development", "performance", "challenge", "educational"];
 
 let currentWords = [];
 let currentWord = "";
@@ -10,26 +68,31 @@ let correctTyped = 0;
 let timeLeft = 60;
 let timer;
 
-const wordDisplay = document.getElementById("word-display");
-const wordInput = document.getElementById("word-input");
-const timeDisplay = document.getElementById("time");
-const scoreDisplay = document.getElementById("score");
-const accuracyDisplay = document.getElementById("accuracy");
-const difficultySelect = document.getElementById("difficulty");
-const fontSizeSelect = document.getElementById("fontSizeSelect");
-const gameContainer = document.getElementById("gameContainer");
+function startCountdown() {
+  let count = 3;
+  countdownOverlay.style.display = "flex";
+  countdownText.textContent = count;
 
-const correctSound = new Audio("correct.mp3");
-const wrongSound = new Audio("wrong.mp3");
+  const countdownInterval = setInterval(() => {
+    count--;
+    if (count > 0) {
+      countdownText.textContent = count;
+    } else if (count === 0) {
+      countdownText.textContent = "Go!";
+    } else {
+      clearInterval(countdownInterval);
+      countdownOverlay.style.display = "none";
+      startGame();
+    }
+  }, 1000);
+}
 
 function startGame() {
-  document.getElementById("welcomeBox").style.display = "none";
+  welcomeBox.style.display = "none";
   gameContainer.style.display = "block";
 
   const difficulty = difficultySelect.value;
-  if (difficulty === "easy") currentWords = easyWords;
-  else if (difficulty === "medium") currentWords = mediumWords;
-  else currentWords = hardWords;
+  currentWords = difficulty === "easy" ? easyWords : difficulty === "medium" ? mediumWords : hardWords;
 
   resetGame();
   generateWord();
@@ -42,17 +105,14 @@ function resetGame() {
   totalTyped = 0;
   correctTyped = 0;
   timeLeft = 60;
+
+  scoreDisplay.textContent = score;
+  accuracyDisplay.textContent = "0%";
+  timeDisplay.textContent = timeLeft;
+
   wordInput.disabled = false;
   wordInput.value = "";
   wordInput.focus();
-  scoreDisplay.textContent = 0;
-  accuracyDisplay.textContent = "0%";
-  timeDisplay.textContent = 60;
-}
-
-function restartGame() {
-  clearInterval(timer);
-  startGame();
 }
 
 function generateWord() {
@@ -68,14 +128,15 @@ function checkInput() {
     score++;
     correctTyped++;
     correctSound.play();
-    createConfettiBurst();
+    createConfettiBurst(window.innerWidth / 2, window.innerHeight / 2);
+    scoreDisplay.textContent = score;
     generateWord();
-  } else if (typedWord.length >= currentWord.length) {
+  } else if (typedWord.length === currentWord.length) {
     wrongSound.play();
   }
+
   totalTyped++;
   updateAccuracy();
-  scoreDisplay.textContent = score;
 }
 
 function updateAccuracy() {
@@ -89,81 +150,52 @@ function updateTimer() {
 
   if (timeLeft <= 0) {
     clearInterval(timer);
-    wordDisplay.textContent = "Time's up!";
     wordInput.disabled = true;
+    wordDisplay.textContent = "Time's up!";
+    showEndMessage();
   }
 }
 
-function adjustFontSize() {
-  const size = fontSizeSelect.value;
-  document.body.style.fontSize = size;
+function restartGame() {
+  endMessageModal.style.display = "none";
+  startCountdown();
 }
 
-// Modal functions
-function openModal() {
-  const modal = document.getElementById("howToModal");
-  modal.classList.remove("hide");
-  modal.style.display = "block";
+function showEndMessage() {
+  const accuracy = totalTyped > 0 ? (correctTyped / totalTyped) * 100 : 0;
+  finalScoreText.textContent = `You scored ${score} points with ${accuracy.toFixed(0)}% accuracy.`;
+
+  if (accuracy >= 90) emojiFeedback.textContent = "🌟🌟🌟";
+  else if (accuracy >= 70) emojiFeedback.textContent = "😊😊";
+  else emojiFeedback.textContent = "🙂";
+
+  createConfettiBurst(window.innerWidth / 2, window.innerHeight / 2);
+  endMessageModal.style.display = "block";
+}
+
+function restartGameFromModal() {
+  endMessageModal.style.display = "none";
+  startCountdown();
 }
 
 function closeModal() {
-  const modal = document.getElementById("howToModal");
-  modal.classList.add("hide");
-  setTimeout(() => {
-    modal.style.display = "none";
-    modal.classList.remove("hide");
-  }, 400);
+  document.getElementById("howToModal").style.display = "none";
 }
 
-document.getElementById("howToPlayBtn").addEventListener("click", openModal);
+document.getElementById("howToPlayBtn").addEventListener("click", () => {
+  document.getElementById("howToModal").style.display = "block";
+});
 
-// 🎉 Confetti Animation
-const confettiCanvas = document.getElementById('confettiCanvas');
-const ctx = confettiCanvas.getContext('2d');
-confettiCanvas.width = window.innerWidth;
-confettiCanvas.height = window.innerHeight;
-
-let confetti = [];
-
-function createConfettiBurst() {
-  const wordDisplayRect = wordDisplay.getBoundingClientRect();
-  const centerX = wordDisplayRect.left + wordDisplayRect.width / 2;
-  const centerY = wordDisplayRect.top + wordDisplayRect.height / 2;
-
-  for (let i = 0; i < 25; i++) {
-    confetti.push({
-      x: centerX,
-      y: centerY,
-      dx: Math.random() * 6 - 3,
-      dy: Math.random() * -4 - 2,
-      size: Math.random() * 5 + 3,
-      color: `hsl(${Math.random() * 360}, 100%, 60%)`,
-      alpha: 1
-    });
-  }
+function adjustFontSize() {
+  const fontSize = document.getElementById("fontSizeSelect").value;
+  document.body.style.fontSize = fontSize;
 }
 
-function drawConfetti() {
-  ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-  confetti.forEach((p, i) => {
-    ctx.fillStyle = p.color;
-    ctx.globalAlpha = p.alpha;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    ctx.fill();
 
-    p.x += p.dx;
-    p.y += p.dy;
-    p.dy += 0.2;
-    p.alpha -= 0.01;
 
-    if (p.alpha <= 0) confetti.splice(i, 1);
-  });
-  ctx.globalAlpha = 1;
-  requestAnimationFrame(drawConfetti);
-}
 
-drawConfetti();
+
+
 
 
 
