@@ -15,7 +15,7 @@
     <p>Choose a difficulty level, adjust font size if needed, and click "How to Play" to see instructions before you begin!</p>
   </div>
 
-  <!-- Top Controls -->
+  <!-- Controls -->
   <div class="top-controls">
     <select id="difficulty">
       <option value="easy">Easy</option>
@@ -23,17 +23,20 @@
       <option value="hard">Hard</option>
     </select>
 
-    <select id="fontSizeSelect" onchange="adjustFontSize()">
-      <option value="16px">A</option>
-      <option value="20px">A+</option>
-      <option value="24px">A++</option>
-    </select>
+    <div class="font-size-wrapper">
+      <label for="fontSizeSelect">Font Size:</label>
+      <select id="fontSizeSelect" onchange="adjustFontSize()">
+        <option value="16px">Small</option>
+        <option value="20px" selected>Medium</option>
+        <option value="24px">Large</option>
+      </select>
+    </div>
 
     <button id="howToPlayBtn">How to Play</button>
-    <button onclick="startGame()">Start Game</button>
+    <button onclick="startCountdown()">Start Game</button>
   </div>
 
-  <!-- Game Container -->
+  <!-- Game Area -->
   <div class="container" id="gameContainer" style="display: none;">
     <h1 id="word-display">Press "Start Game" to begin</h1>
     <input type="text" id="word-input" placeholder="Type here..." disabled />
@@ -45,6 +48,11 @@
     <button id="restartBtn" onclick="restartGame()">Restart Game</button>
   </div>
 
+  <!-- Countdown Overlay -->
+  <div id="countdownOverlay" class="countdown-overlay">
+    <div id="countdownText" class="countdown-text">3</div>
+  </div>
+
   <!-- About Section -->
   <div class="about-box">
     <h2>About TypeMaster Junior</h2>
@@ -53,7 +61,7 @@
     <p>View live: <a href="https://ebenezercoleman.github.io/TypeMasterJunior/" target="_blank">https://ebenezercoleman.github.io/TypeMasterJunior/</a></p>
   </div>
 
-  <!-- Modal -->
+  <!-- How to Play Modal -->
   <div class="modal" id="howToModal">
     <div class="modal-content">
       <span class="close" onclick="closeModal()">&times;</span>
@@ -68,12 +76,34 @@
     </div>
   </div>
 
+  <!-- End Game Modal -->
+  <div id="endMessageModal" class="modal">
+    <div class="modal-content end-message">
+      <h2>Great Job!</h2>
+      <div id="emojiFeedback" style="font-size: 2rem; margin-bottom: 10px;"></div>
+      <p id="finalScoreText">You scored X points with Y% accuracy.</p>
+      <button onclick="restartGameFromModal()">Try Again</button>
+    </div>
+  </div>
+
   <!-- Confetti Canvas -->
   <canvas id="confettiCanvas"></canvas>
 
+  <!-- JavaScript -->
   <script src="script.js"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
