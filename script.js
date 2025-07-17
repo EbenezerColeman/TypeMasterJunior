@@ -12,7 +12,9 @@ const countdownOverlay = document.getElementById("countdownOverlay");
 const countdownText = document.getElementById("countdownText");
 const welcomeBox = document.getElementById("welcomeBox");
 const endMessageModal = document.getElementById("endMessageModal");
+const howToPlayBtn = document.getElementById("howToPlayBtn");
 
+// Sounds
 const correctSound = new Audio("sounds/correct.mp3");
 const wrongSound = new Audio("sounds/wrong.mp3");
 
@@ -21,7 +23,6 @@ const confettiCanvas = document.getElementById("confettiCanvas");
 const ctx = confettiCanvas.getContext("2d");
 confettiCanvas.width = window.innerWidth;
 confettiCanvas.height = window.innerHeight;
-
 const confettiParticles = [];
 
 function createConfettiBurst(x, y) {
@@ -40,8 +41,7 @@ function createConfettiBurst(x, y) {
 
 function updateConfetti() {
   ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-  for (let i = 0; i < confettiParticles.length; i++) {
-    const p = confettiParticles[i];
+  for (let p of confettiParticles) {
     p.x += p.velocityX;
     p.y += p.velocityY;
     p.velocityY += p.gravity;
@@ -56,9 +56,9 @@ function updateConfetti() {
 updateConfetti();
 
 // Word Lists
-const easyWords = ["cat", "dog", "sun", "red", "book"];
-const mediumWords = ["keyboard", "student", "typing", "school", "lesson"];
-const hardWords = ["accuracy", "development", "performance", "challenge", "educational"];
+const easyWords = ["cat", "dog", "sun", "red", "book", "pen", "cup", "hat", "ball", "man"];
+const mediumWords = ["keyboard", "student", "typing", "school", "lesson", "science", "teacher", "classroom", "learning"];
+const hardWords = ["accuracy", "development", "performance", "challenge", "educational", "discipline", "motivation", "improvement", "achievement"];
 
 let currentWords = [];
 let currentWord = "";
@@ -68,6 +68,7 @@ let correctTyped = 0;
 let timeLeft = 60;
 let timer;
 
+// Countdown
 function startCountdown() {
   let count = 3;
   countdownOverlay.style.display = "flex";
@@ -87,6 +88,7 @@ function startCountdown() {
   }, 1000);
 }
 
+// Start Game
 function startGame() {
   welcomeBox.style.display = "none";
   gameContainer.style.display = "block";
@@ -100,6 +102,7 @@ function startGame() {
   wordInput.addEventListener("input", checkInput);
 }
 
+// Reset values
 function resetGame() {
   score = 0;
   totalTyped = 0;
@@ -115,6 +118,7 @@ function resetGame() {
   wordInput.focus();
 }
 
+// Generate word
 function generateWord() {
   const randomIndex = Math.floor(Math.random() * currentWords.length);
   currentWord = currentWords[randomIndex];
@@ -122,6 +126,7 @@ function generateWord() {
   wordInput.value = "";
 }
 
+// Check typed input
 function checkInput() {
   const typedWord = wordInput.value.trim();
   if (typedWord === currentWord) {
@@ -139,11 +144,13 @@ function checkInput() {
   updateAccuracy();
 }
 
+// Update accuracy %
 function updateAccuracy() {
   const accuracy = totalTyped > 0 ? (correctTyped / totalTyped) * 100 : 0;
   accuracyDisplay.textContent = accuracy.toFixed(0) + "%";
 }
 
+// Timer
 function updateTimer() {
   timeLeft--;
   timeDisplay.textContent = timeLeft;
@@ -156,11 +163,13 @@ function updateTimer() {
   }
 }
 
+// Restart
 function restartGame() {
   endMessageModal.style.display = "none";
   startCountdown();
 }
 
+// Show Final Score Modal
 function showEndMessage() {
   const accuracy = totalTyped > 0 ? (correctTyped / totalTyped) * 100 : 0;
   finalScoreText.textContent = `You scored ${score} points with ${accuracy.toFixed(0)}% accuracy.`;
@@ -173,23 +182,26 @@ function showEndMessage() {
   endMessageModal.style.display = "block";
 }
 
+// Restart from modal
 function restartGameFromModal() {
   endMessageModal.style.display = "none";
   startCountdown();
 }
 
+// Modal controls
 function closeModal() {
   document.getElementById("howToModal").style.display = "none";
 }
-
-document.getElementById("howToPlayBtn").addEventListener("click", () => {
+howToPlayBtn.addEventListener("click", () => {
   document.getElementById("howToModal").style.display = "block";
 });
 
+// Font size
 function adjustFontSize() {
   const fontSize = document.getElementById("fontSizeSelect").value;
   document.body.style.fontSize = fontSize;
 }
+
 
 
 
