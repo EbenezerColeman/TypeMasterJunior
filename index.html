@@ -8,6 +8,9 @@
 </head>
 <body>
 
+  <!-- Logo -->
+  <img src="logo.png" alt="TypeMaster Junior Logo" class="welcome-logo" />
+
   <!-- Welcome Box -->
   <div id="welcomeBox" class="welcome-box">
     <h2>Welcome to TypeMaster Junior</h2>
@@ -38,8 +41,10 @@
 
   <!-- Game Area -->
   <div class="container" id="gameContainer" style="display: none;">
-    <h1 id="word-display">Press "Start Game" to begin</h1>
-    <input type="text" id="word-input" placeholder="Type here..." disabled />
+    <div class="game-content">
+      <h1 id="word-display">Press "Start Game" to begin</h1>
+      <input type="text" id="word-input" placeholder="Type here..." disabled />
+    </div>
     <div class="info">
       <p>Time: <span id="time">60</span>s</p>
       <p>Score: <span id="score">0</span></p>
@@ -93,6 +98,8 @@
   <script src="script.js"></script>
 </body>
 </html>
+
+
 
 
 
