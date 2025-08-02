@@ -176,7 +176,7 @@ function showEndMessage() {
 
   if (accuracy >= 90) emojiFeedback.textContent = "🌟🌟🌟";
   else if (accuracy >= 70) emojiFeedback.textContent = "😊😊";
-  else emojiFeedback.textContent = "🙂";
+  else emojiFeedback.textContent = "🙂🥈";
 
   createConfettiBurst(window.innerWidth / 2, window.innerHeight / 2);
   endMessageModal.style.display = "block";
@@ -201,6 +201,11 @@ function adjustFontSize() {
   const fontSize = document.getElementById("fontSizeSelect").value;
   document.body.style.fontSize = fontSize;
 }
+
+
+
+
+
 
 
 
